@@ -1,0 +1,205 @@
+####################################################################
+# StefanoG Vagrantfile for a multi-machine environment v0.1
+####################################################################
+# Box utilizzate:
+# puppetlabs/centos-6.6-64-nocm
+# bento/oracle-7.3
+# bento/ubuntu-18.04
+# puppetlabs/ubuntu-16.04-64-nocm
+# opentable/win-2008r2-standard-amd64-nocm
+# opentable/win-2012r2-standard-amd64-nocm
+
+require 'yaml'
+configuration = YAML::load(File.read("#{File.dirname(__FILE__)}/vagrant_config.yaml"))
+
+Vagrant.configure("2") do |config1|
+
+    #Configurazione VMs Ubuntu18.04
+
+    if configuration["ubuntu18_nvm"] > 0
+        config1.vm.provider "virtualbox" do |vb|
+            vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+        end
+        subnet=10
+        (1..configuration["ubuntu18_nvm"]).each do |i|
+            config1.vm.define "ubuntu18-#{i}" do |ubuntu|
+                ubuntu.vm.box = configuration["ubuntu18_box"]
+                ubuntu.vm.network "private_network", ip:"192.168.33.#{subnet}"
+                ubuntu.vm.network :forwarded_port, guest: 22, host: 10122, id: "ssh", auto_correct: true
+                ubuntu.ssh.insert_key = false
+                subnet= subnet+1
+                ubuntu.vm.host_name = "ubuntu-#{i}"
+                ubuntu.vm.provision "shell", preserve_order: true, inline: <<-SHELL
+                    wget https://apt.puppetlabs.com/puppet-release-bionic.deb
+                    dpkg -i puppet-release-bionic.deb
+                    apt update
+                    apt install -y ifupdown
+                    apt install -y puppet-agent
+                    apt install -y vim
+                    apt install -y nagios-plugins
+                    systemctl start puppet
+                    apt install -y git
+                    git config --global color.ui true
+                    mkdir /etc/puppetlabs/code/environments/integration/
+                    /opt/puppetlabs/puppet/bin/gem install r10k
+                    /opt/puppetlabs/puppet/bin/gem install hiera-eyaml
+                SHELL
+                ubuntu.vm.provider :virtualbox do |v1|
+                    v1.customize ["modifyvm", :id, "--cpus", configuration["ubuntu18_cpu"]]
+                    v1.customize ["modifyvm", :id, "--memory", configuration["ubuntu18_ram"]]
+                end
+            end
+        end
+    end
+
+
+    #Configurazione VMs Ubuntu16.04
+
+    if configuration["ubuntu16_nvm"] > 0
+        subnet=10
+        (1..configuration["ubuntu16_nvm"]).each do |i|
+            config1.vm.define "ubuntu16-#{i}" do |ubuntu|
+                ubuntu.vm.box = configuration["ubuntu16_box"]
+                ubuntu.vm.network "private_network", ip:"192.168.33.#{subnet}"
+                ubuntu.vm.network :forwarded_port, guest: 22, host: 10122, id: "ssh", auto_correct: true
+                ubuntu.ssh.insert_key = false
+                subnet= subnet+1
+                ubuntu.vm.host_name = "ubuntu-#{i}"
+                ubuntu.vm.provision "shell", preserve_order: true, inline: <<-SHELL
+                    wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb
+                    dpkg -i puppetlabs-release-pc1-xenial.deb
+                    apt update
+                    apt install -y puppet-agent
+                    apt install -y vim
+                    apt install -y nagios-plugins
+                    systemctl start puppet
+                    apt install -y git
+                    git config --global color.ui true
+                    mkdir /etc/puppetlabs/code/environments/integration/
+                    /opt/puppetlabs/puppet/bin/gem install r10k
+                    /opt/puppetlabs/puppet/bin/gem install hiera-eyaml
+                SHELL
+                ubuntu.vm.provider :virtualbox do |v1|
+                    v1.customize ["modifyvm", :id, "--cpus", configuration["ubuntu16_cpu"]]
+                    v1.customize ["modifyvm", :id, "--memory", configuration["ubuntu16_ram"]]
+                end
+            end
+        end
+    end
+
+    #Configurazione VMs Centos6
+
+    if configuration["centos6_nvm"] > 0
+        subnet=20
+        (1..configuration["centos6_nvm"]).each do |i|
+            config1.vm.define "centos6-#{i}" do |centos6|
+                centos6.vm.box = configuration["centos6_box"]
+                #centos6.vm.network "private_network", type: "dhcp"
+                centos6.vm.network "private_network", ip:"192.168.33.#{subnet}"
+                centos6.vm.network :forwarded_port, guest: 22, host: 10122, id: "ssh", auto_correct: true
+                centos6.ssh.insert_key = false
+                subnet= subnet+1
+                centos6.vm.host_name = "centos6-#{i}"
+                centos6.vm.provision "shell", preserve_order: true, inline: <<-SHELL
+                    shell.inline = "touch $1 && chmod 0440 $1 && echo $2 > $1"
+                    shell.args = %q{/etc/sudoers.d/root_ssh_agent "Defaults    env_keep += \"SSH_AUTH_SOCK\""}
+                    rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-6.noarch.rpm
+                    yum update
+                    yum install puppet-agent -y
+                    chkconfig puppet on
+                    yum install git -y
+                    git config --global color.ui true
+                    mkdir /etc/puppetlabs/code/environments/integration/
+                    /opt/puppetlabs/puppet/bin/gem install r10k
+                    /opt/puppetlabs/puppet/bin/gem install hiera-eyaml
+                SHELL
+                centos6.vm.provider :virtualbox do |v2|
+                    v2.customize ["modifyvm", :id, "--cpus", configuration["centos6_cpu"]]
+                    v2.customize ["modifyvm", :id, "--memory", configuration["centos6_ram"]]
+                end
+            end
+        end
+    end
+
+ #Configurazione VMs Oracle Linux
+
+    if configuration["oracle_nvm"] > 0
+        subnet=30
+            (1..configuration["oracle_nvm"]).each do |i|
+                config1.vm.define "oracle-#{i}" do |oracle|
+                oracle.vm.box = configuration["oracle_box"]
+                oracle.vm.network "private_network", ip:"192.168.33.#{subnet}"
+                oracle.vm.network :forwarded_port, guest: 22, host: 10122, id: "ssh", auto_correct: true
+                oracle.ssh.insert_key = false
+                subnet= subnet+1
+                oracle.vm.host_name = "oracle-#{i}"
+                oracle.vm.provision "shell", inline: <<-SHELL
+                    shell.inline = "touch $1 && chmod 0440 $1 && echo $2 > $1"
+                    shell.args = %q{/etc/sudoers.d/root_ssh_agent "Defaults    env_keep += \"SSH_AUTH_SOCK\""}
+                    rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-6.noarch.rpm
+                    yum update
+                    yum install puppet-agent -y
+                    chkconfig puppet on
+                    yum install git -y
+                    git config --global color.ui true
+                    mkdir /etc/puppetlabs/code/environments/integration/
+                    /opt/puppetlabs/puppet/bin/gem install r10k
+                    /opt/puppetlabs/puppet/bin/gem install hiera-eyaml
+                SHELL
+                oracle.vm.provider :virtualbox do |v3|
+                    v3.customize ["modifyvm", :id, "--cpus", configuration["oracle_cpu"]]
+                    v3.customize ["modifyvm", :id, "--memory", configuration["oracle_ram"]]
+                end
+            end
+        end
+    end
+
+    #Configurazione VMs Windows2008R2
+
+    if configuration["win2008_nvm"] > 0
+    subnet=40
+        (1..configuration["win2008_nvm"]).each do |i|
+            config1.vm.define "win2008-#{i}" do |win2008|
+                win2008.vm.box = configuration["win2008_box"]
+                win2008.vm.network "private_network", ip:"192.168.33.#{subnet}"
+                win2008.ssh.insert_key = false
+                win2008.ssh.forward_agent = true
+                subnet= subnet+1
+                win2008.vm.host_name = "win2008-#{i}"
+                win2008.vm.provider :virtualbox do |v4|
+                    v4.customize ["modifyvm", :id, "--cpus", configuration["win2008_cpu"]]
+                    v4.customize ["modifyvm", :id, "--memory", configuration["win2008_ram"]]
+                    v4.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+                    v4.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+                    v4.gui = true
+                end
+                win2008.vm.provision "shell", path: "vagrant_provisionWin2008.ps1"
+            end
+        end
+    end
+
+    #Configurazione VMs Windows2012R2
+
+    if configuration["win2012_nvm"] > 0
+        subnet=50
+        (1..configuration["win2012_nvm"]).each do |i|
+            config1.vm.define "win2012-#{i}" do |win2012|
+                win2012.vm.box = configuration["win2012_box"]
+                win2012.vm.network "private_network", ip:"192.168.33.#{subnet}"
+                win2012.ssh.insert_key = false
+                win2012.ssh.forward_agent = true
+                subnet= subnet+1
+                win2012.vm.host_name = "win2012-#{i}"
+                win2012.vm.provider :virtualbox do |v5|
+                    v5.customize ["modifyvm", :id, "--cpus", configuration["win2012_cpu"]]
+                    v5.customize ["modifyvm", :id, "--memory", configuration["win2012_ram"]]
+                    v5.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+                    v5.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+                    v5.gui = true
+                end
+                win2012.vm.provision "shell", path: "vagrant_provisionWin2012.ps1"
+            end
+        end
+    end
+
+end

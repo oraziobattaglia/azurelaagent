@@ -1,0 +1,20 @@
+# azurelaagent/data/common.yaml
+---
+  # Common data
+  azurelaagent::azure_id: 'your_workspace_id'
+  azurelaagent::azure_shared: 'your_shared_key'
+  azurelaagent::use_proxy: false
+  azurelaagent::proxy: 'http://your.proxy:port'
+
+  # Linux installation data
+  azurelaagent::install_linux::x64_download_path: 'https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.8.1.256/omsagent-1.8.1-256.universal.x64.sh'
+  azurelaagent::install_linux::x86_download_path: 'https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.8.1.256/omsagent-1.8.1-256.universal.x86.sh'
+  azurelaagent::install_linux::path_to_download: '/root'
+  azurelaagent::install_linux::downloaded_script: 'omsagent.sh'
+
+  # Windows installation data
+  azurelaagent::install_windows::x64_download_path: 'https://go.microsoft.com/fwlink/?LinkId=828603'
+  azurelaagent::install_windows::x86_download_path: 'https://go.microsoft.com/fwlink/?LinkId=828604'
+  azurelaagent::install_windows::path_to_download: 'C:\temp'
+  azurelaagent::install_windows::downloaded_exe: 'MMASetup.exe'
+  azurelaagent::install_windows::path_to_test_installation: 'C:\Program Files\Microsoft Monitoring Agent\Agent'

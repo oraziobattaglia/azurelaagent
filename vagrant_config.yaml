@@ -1,0 +1,50 @@
+---
+
+# File yaml per la configurazione dell VMs vagrant 
+# Per ogni sistema operativo modificare il valore nvm (numero di vm per Box)
+# il numero di macchine generate è pari alla somma degli nvm
+#
+# Box utilizzate:
+# puppetlabs/centos-6.6-64-nocm
+# bento/oracle-7.3
+# puppetlabs/ubuntu-16.04-64-nocm
+# opentable/win-2008r2-standard-amd64-nocm
+# opentable/win-2012r2-standard-amd64-nocm
+
+path: vagrant
+
+#Ubuntu18.04 config
+ubuntu18_box: bento/ubuntu-18.04
+ubuntu18_nvm: 0
+ubuntu18_cpu: 1
+ubuntu18_ram: 2048
+
+#Ubuntu16.04 config
+ubuntu16_box: puppetlabs/ubuntu-16.04-64-nocm
+ubuntu16_nvm: 1
+ubuntu16_cpu: 1
+ubuntu16_ram: 1024
+
+#Centos-6 config
+centos6_box: puppetlabs/centos-6.6-64-nocm
+centos6_nvm: 0
+centos6_cpu: 1
+centos6_ram: 1024
+
+#Oracle Linux config
+oracle_box: bento/oracle-7.3
+oracle_nvm: 0
+oracle_cpu: 1
+oracle_ram: 1024
+
+#Windows2008R2 config
+win2008_box: opentable/win-2008r2-standard-amd64-nocm
+win2008_nvm: 0
+win2008_cpu: 2
+win2008_ram: 1024
+
+#Windows2012R2 config
+win2012_box: opentable/win-2012r2-standard-amd64-nocm
+win2012_nvm: 1
+win2012_cpu: 2
+win2012_ram: 1024

@@ -1,0 +1,29 @@
+Per fare le prove sulla vm vagrant linux:
+
+1. cd /
+2. ln -s /vagrant/ ./azurelaagent
+3. echo "include azurelaagent" > ./test.pp
+4. puppet apply test.pp --modulepath=./
+
+I passi sono necessari per simulare la directory che contiene il modulo (link a /vagrant)
+
+Per fare le prove sulla vm vagrant windows:
+
+1. cd c:\
+2. rename vagrant azurelaagent
+3. echo "include azurelaagent" > ./test.pp
+4. puppet apply test.pp --modulepath=c:\
+
+I passi sono necessari per simulare la directory che contiene il modulo (link a /vagrant)
+
+Notify per test
+
+  # notify {'Test command':
+  #   message => $download_command,
+  # }
+
+Generare la documentazione markdown nel file REFERENCE.md 
+puppet strings generate --format markdown
+
+Per generare il pacchetto .tar.gz per pubblicare il modulo sulla forge
+pdk build
