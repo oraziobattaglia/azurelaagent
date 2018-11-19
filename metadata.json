@@ -4,7 +4,7 @@
   "author": "oraziobattaglia",
   "summary": "Install and configure Azure Log Analytics Agent",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/oraziobattaglia/azurelaagent",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
