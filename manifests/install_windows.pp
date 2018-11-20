@@ -4,6 +4,8 @@
 # To override default value use yaml file and define variables like
 # azurelaagent::install_windows::x64_download_path: 'https://go.microsoft.com/fwlink/?LinkId=828603'
 #
+# @see https://docs.microsoft.com/it-it/azure/log-analytics/log-analytics-agent-windows?toc=/azure/azure-monitor/toc.json#install-the-agent-using-the-command-line
+#
 # @param azure_id
 #   Azure workspace ID (passed from init.pp)
 # @param azure_shared
