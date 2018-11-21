@@ -36,6 +36,7 @@ class azurelaagent (
   case $::osfamily {
     'RedHat','Debian': {
       class { 'azurelaagent::install_linux':
+        ensure       => $ensure,
         azure_id     => $azure_id,
         azure_shared => $azure_shared,
         use_proxy    => $use_proxy,

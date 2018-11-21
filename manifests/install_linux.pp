@@ -6,6 +6,8 @@
 #
 # @see https://github.com/Microsoft/OMS-Agent-for-Linux/blob/master/docs/OMS-Agent-for-Linux.md
 #
+# @param ensure
+#   'present' to install the agent, 'absent' to uninstall the agent
 # @param azure_id
 #   Azure workspace ID (passed from init.pp)
 # @param azure_shared
@@ -23,6 +25,8 @@
 # @param proxy
 #   Proxy URL like [protocol://][user:password@]proxyhost[:port] (passed from init.pp)
 class azurelaagent::install_linux (
+  String $ensure,
+
   String $azure_id,
   String $azure_shared,
 
@@ -36,10 +40,7 @@ class azurelaagent::install_linux (
 
   # Optional[Array] $packages_to_install = ['glibc','openssl','curl','python-ctypes','pam'],  
 ){
-  # package {$packages_to_install:
-  #   ensure => present,
-  # }
-
+  # Look for the right version of the installation script
   if ($::architecture == 'amd64' or $::architecture == 'x86_64') {
     # 64 bit
     $file_to_download = $x64_download_path
@@ -67,17 +68,36 @@ class azurelaagent::install_linux (
     mode => '0744',
   }
 
-  if ($use_proxy and $proxy != '' and $proxy != undef) {
-    $install_command = "${path_to_download}/${downloaded_script} --upgrade -p ${proxy} -w ${azure_id} -s ${azure_shared}"
-  } else {
-    $install_command = "${path_to_download}/${downloaded_script} --upgrade -w ${azure_id} -s ${azure_shared}"
-  }
+  if ($ensure == 'present') {
+    # Install Agent
 
-  # Agent installation
-  exec { 'OMSAgent installation':
-    path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
-    command => $install_command,
-    unless  => 'test -f /opt/microsoft/omsagent/bin/omsadmin.sh',
+    # package {$packages_to_install:
+    #   ensure => present,
+    # }
+
+    if ($use_proxy and $proxy != '' and $proxy != undef) {
+      $install_command = "${path_to_download}/${downloaded_script} --upgrade -p ${proxy} -w ${azure_id} -s ${azure_shared}"
+    } else {
+      $install_command = "${path_to_download}/${downloaded_script} --upgrade -w ${azure_id} -s ${azure_shared}"
+    }
+
+    # Agent installation
+    exec { 'OMSAgent installation':
+      path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
+      command => $install_command,
+      unless  => 'test -f /opt/microsoft/omsagent/bin/omsadmin.sh',
+    }
+
+  } elsif ($ensure == 'absent') {
+    # Uninstall Agent
+    exec { 'OMSAgent uninstallation':
+      path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
+      command => "${path_to_download}/${downloaded_script} --purge",
+      onlyif  => 'test -f /opt/microsoft/omsagent/bin/omsadmin.sh',
+    }
+
+  } else {
+    fail('The ensure param must be present or absent')
   }
 
 }
