@@ -1,6 +1,6 @@
 {
   "name": "oraziobattaglia-azurelaagent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "oraziobattaglia",
   "summary": "Install and configure Azure Log Analytics Agent",
   "license": "Apache-2.0",

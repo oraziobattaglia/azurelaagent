@@ -32,10 +32,20 @@ The module have the dependecies:
 
 Example
 
+To install the agent
+
 ```
    class { 'azurelaagent':
      azure_id     => 'your_workspace_id',
      azure_shared => 'your_shared_key',
+   }
+```
+
+To uninstall the agent
+
+```
+   class { 'azurelaagent':
+     ensure => 'absent',
    }
 ```
 
@@ -50,13 +60,15 @@ azurelaagent::install_linux::x64_download_path: 'https://github.com/Microsoft/OM
 azurelaagent::install_windows::x64_download_path: 'https://go.microsoft.com/fwlink/?LinkId=828603'
 ```
 
+At the moment the only way to change the workspace id and/or the shared key is to uninstall and then install again the agent with the right values.
+
 ## Reference
 
-See reference
+See reference.
 
 ## Limitations
 
-OS compatibility: tested on Ubuntu 16.04 and Windows Server 2012 R2
+OS compatibility: tested on Ubuntu 16.04 and Windows Server 2012 R2.
 
 ## Development
 
