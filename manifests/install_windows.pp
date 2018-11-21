@@ -22,6 +22,8 @@
 #   Name of the installer
 # @param path_to_test_installation
 #   Agent binaries path, used in the exec resource
+# @param package_name
+#   Package name as is in Control Panel, Programs and Features 
 # @param use_proxy
 #   True to use a proxy (passed from init.pp)
 # @param proxy

@@ -9,26 +9,21 @@
 # @example Data on yaml file
 #   include azurelaagent
 #
+# @param ensure
+#   'present' to install the agent, 'absent' to uninstall the agent
 # @param azure_id
 #   Azure workspace ID
 # @param azure_shared
 #   Azure shared key
-# @param azure_domain
-#   Azure OMS domain
-# @param azure_resource
-#   Azure Resource ID
 # @param use_proxy
 #   True to use a proxy
 # @param proxy
 #   Proxy URL like [protocol://][user:password@]proxyhost[:port]
 class azurelaagent (
   # Data in yaml
+  String $ensure,
   String $azure_id,
   String $azure_shared,
-
-  Optional[String] $ensure,
-  # Optional[String] $azure_domain = undef,
-  # Optional[String] $azure_resource = undef,
 
   Optional[Boolean] $use_proxy = false,
   Optional[String] $proxy = undef,

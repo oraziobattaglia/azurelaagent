@@ -36,6 +36,12 @@ include azurelaagent
 
 The following parameters are available in the `azurelaagent` class.
 
+##### `ensure`
+
+Data type: `String`
+
+'present' to install the agent, 'absent' to uninstall the agent
+
 ##### `azure_id`
 
 Data type: `String`
@@ -47,22 +53,6 @@ Azure workspace ID
 Data type: `String`
 
 Azure shared key
-
-##### `azure_domain`
-
-Data type: `Optional[String]`
-
-Azure OMS domain
-
-Default value: `undef`
-
-##### `azure_resource`
-
-Data type: `Optional[String]`
-
-Azure Resource ID
-
-Default value: `undef`
 
 ##### `use_proxy`
 
@@ -91,6 +81,12 @@ https://github.com/Microsoft/OMS-Agent-for-Linux/blob/master/docs/OMS-Agent-for-
 #### Parameters
 
 The following parameters are available in the `azurelaagent::install_linux` class.
+
+##### `ensure`
+
+Data type: `String`
+
+'present' to install the agent, 'absent' to uninstall the agent
 
 ##### `azure_id`
 
@@ -145,9 +141,18 @@ Proxy URL like [protocol://][user:password@]proxyhost[:port] (passed from init.p
 To override default value use yaml file and define variables like
 azurelaagent::install_windows::x64_download_path: 'https://go.microsoft.com/fwlink/?LinkId=828603'
 
+* **See also**
+https://docs.microsoft.com/it-it/azure/log-analytics/log-analytics-agent-windows?toc=/azure/azure-monitor/toc.json#install-the-agent-using-the-command-line
+
 #### Parameters
 
 The following parameters are available in the `azurelaagent::install_windows` class.
+
+##### `ensure`
+
+Data type: `String`
+
+'present' to install the agent, 'absent' to uninstall the agent
 
 ##### `azure_id`
 
@@ -190,6 +195,12 @@ Name of the installer
 Data type: `String`
 
 Agent binaries path, used in the exec resource
+
+##### `package_name`
+
+Data type: `String`
+
+Package name as is in Control Panel, Programs and Features
 
 ##### `use_proxy`
 
