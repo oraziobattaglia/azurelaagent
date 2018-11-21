@@ -1,6 +1,7 @@
 # azurelaagent/data/common.yaml
 ---
   # Common data
+  azurelaagent::ensure: 'present'
   azurelaagent::azure_id: 'your_workspace_id'
   azurelaagent::azure_shared: 'your_shared_key'
   azurelaagent::use_proxy: false
@@ -18,3 +19,4 @@
   azurelaagent::install_windows::path_to_download: 'C:\temp'
   azurelaagent::install_windows::downloaded_exe: 'MMASetup.exe'
   azurelaagent::install_windows::path_to_test_installation: 'C:\Program Files\Microsoft Monitoring Agent\Agent'
+  azurelaagent::install_windows::package_name: 'Microsoft Monitoring Agent'

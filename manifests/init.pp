@@ -25,8 +25,10 @@ class azurelaagent (
   # Data in yaml
   String $azure_id,
   String $azure_shared,
-  Optional[String] $azure_domain = undef,
-  Optional[String] $azure_resource = undef,
+
+  Optional[String] $ensure,
+  # Optional[String] $azure_domain = undef,
+  # Optional[String] $azure_resource = undef,
 
   Optional[Boolean] $use_proxy = false,
   Optional[String] $proxy = undef,
@@ -42,6 +44,7 @@ class azurelaagent (
     }
     'windows': {
       class { 'azurelaagent::install_windows':
+        ensure       => $ensure,
         azure_id     => $azure_id,
         azure_shared => $azure_shared,
         use_proxy    => $use_proxy,
