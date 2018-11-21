@@ -94,7 +94,7 @@ class azurelaagent::install_windows (
     # Uninstall Agent
     package{$package_name:
       ensure => 'absent',
-    } 
+    }
   } else {
     fail('The ensure param must be present or absent')
   }
