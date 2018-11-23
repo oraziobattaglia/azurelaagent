@@ -135,15 +135,11 @@ Data type: `String`
 
 The new workspace id
 
-##### `azure_share`
-
-The new workspace key
-
 ##### `azure_shared`
 
 Data type: `String`
 
-
+The new workspace key
 
 ##### `omsadmin_command`
 
@@ -178,15 +174,11 @@ Data type: `String`
 
 The new workspace id
 
-##### `azure_share`
-
-The new workspace key
-
 ##### `azure_shared`
 
 Data type: `String`
 
-
+The new workspace key
 
 ##### `path_to_download`
 
