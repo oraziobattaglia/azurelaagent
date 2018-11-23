@@ -1,5 +1,16 @@
 # Changelog
 
+## Release 0.1.2
+
+**Features**
+
+* Install and uninstall Azure Log Analytics agent on linux and windows systems
+* Modify Azure Log Analytics workspace id and key after installation
+
+**Bugfixes**
+
+**Known Issues**
+
 ## Release 0.1.1
 
 **Features**

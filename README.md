@@ -41,6 +41,15 @@ To install the agent
    }
 ```
 
+To modify workspace id and key
+
+```
+   class { 'azurelaagent::config':
+     azure_id     => 'your_workspace_id',
+     azure_shared => 'your_shared_key',
+   }
+```
+
 To uninstall the agent
 
 ```

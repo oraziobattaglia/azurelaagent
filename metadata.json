@@ -1,6 +1,6 @@
 {
   "name": "oraziobattaglia-azurelaagent",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "oraziobattaglia",
   "summary": "Install and configure Azure Log Analytics Agent",
   "license": "Apache-2.0",
@@ -49,5 +49,11 @@
   ],
   "pdk-version": "1.7.1",
   "template-url": "file://C:/Program Files/Puppet Labs/DevelopmentKit/share/cache/pdk-templates.git",
-  "template-ref": "1.7.1-0-g810b982"
+  "template-ref": "1.7.1-0-g810b982",
+  "tags": [
+    "azure",
+    "log",
+    "analytics",
+    "loganalytics"
+  ]
 }
