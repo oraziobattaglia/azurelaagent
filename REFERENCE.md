@@ -6,6 +6,9 @@
 **Classes**
 
 * [`azurelaagent`](#azurelaagent): Install and configure Azure Log Analytics on Windows and Linux
+* [`azurelaagent::config`](#azurelaagentconfig): Change Azure Log Analytics configuration on Windows and Linux
+* [`azurelaagent::config_linux`](#azurelaagentconfig_linux): Permit to set new workspace Id and Key. Remove all present workspace Ids.
+* [`azurelaagent::config_windows`](#azurelaagentconfig_windows): Permit to set new workspace Id and Key. Remove all present workspace Ids.
 * [`azurelaagent::install_linux`](#azurelaagentinstall_linux): Install agent on linux.
 * [`azurelaagent::install_windows`](#azurelaagentinstall_windows): Install agent on windows.
 
@@ -69,6 +72,129 @@ Data type: `Optional[String]`
 Proxy URL like [protocol://][user:password@]proxyhost[:port]
 
 Default value: `undef`
+
+### azurelaagent::config
+
+Change Azure Log Analytics configuration on Windows and Linux
+
+#### Examples
+
+##### Explicit data
+
+```puppet
+class { 'azurelaagent::config':
+  azure_id     => 'your_workspace_id',
+  azure_shared => 'your_shared_key',
+}
+```
+
+##### Data on yaml file
+
+```puppet
+include azurelaagent::config
+```
+
+#### Parameters
+
+The following parameters are available in the `azurelaagent::config` class.
+
+##### `azure_id`
+
+Data type: `String`
+
+Azure workspace ID
+
+##### `azure_shared`
+
+Data type: `String`
+
+Azure shared key
+
+### azurelaagent::config_linux
+
+Permit to set new workspace Id and Key. Remove all present workspace Ids.
+
+#### Examples
+
+##### 
+
+```puppet
+class {'azurelaagent::config_linux':
+  azure_id     => 'new_workspace_id',
+  azure_shared => 'new_shared_key',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `azurelaagent::config_linux` class.
+
+##### `azure_id`
+
+Data type: `String`
+
+The new workspace id
+
+##### `azure_share`
+
+The new workspace key
+
+##### `azure_shared`
+
+Data type: `String`
+
+
+
+##### `omsadmin_command`
+
+Data type: `Optional[String]`
+
+
+
+Default value: '/opt/microsoft/omsagent/bin/omsadmin.sh'
+
+### azurelaagent::config_windows
+
+Permit to set new workspace Id and Key. Remove all present workspace Ids.
+
+#### Examples
+
+##### 
+
+```puppet
+class {'azurelaagent::config_windows':
+  azure_id     => 'new_workspace_id',
+  azure_shared => 'new_shared_key',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `azurelaagent::config_windows` class.
+
+##### `azure_id`
+
+Data type: `String`
+
+The new workspace id
+
+##### `azure_share`
+
+The new workspace key
+
+##### `azure_shared`
+
+Data type: `String`
+
+
+
+##### `path_to_download`
+
+Data type: `Optional[String]`
+
+
+
+Default value: 'C:\temp'
 
 ### azurelaagent::install_linux
 

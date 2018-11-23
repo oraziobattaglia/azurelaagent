@@ -2,7 +2,7 @@
 #
 # @param azure_id
 #   The new workspace id
-# @param azure_share
+# @param azure_shared
 #   The new workspace key
 #
 # @example
