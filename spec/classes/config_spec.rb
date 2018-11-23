@@ -1,11 +1,6 @@
 require 'spec_helper'
 
-describe 'azurelaagent::config_linux' do
-  let(:title) { 'namevar' }
-  let(:params) do
-    {}
-  end
-
+describe 'azurelaagent::config' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

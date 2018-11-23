@@ -6,13 +6,20 @@
 #   The new workspace key
 #
 # @example
-#   azurelaagent::config_linux { 
+#   class {'azurelaagent::config_linux': 
 #     azure_id     => 'new_workspace_id', 
 #     azure_shared => 'new_shared_key',
 #   }
-define azurelaagent::config_linux(
+class azurelaagent::config_linux (
   String $azure_id,
   String $azure_shared,
-) {
-  # TO DO
+
+  Optional[String] $omsadmin_command = '/opt/microsoft/omsagent/bin/omsadmin.sh',
+){
+  # Set new workspace Id and Key
+  exec { 'SetWorkspaceAndKeyOnLinux':
+    path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
+    command => "${omsadmin_command} -X; ${omsadmin_command} -w ${azure_id} -s ${azure_shared}",
+    unless  => "${omsadmin_command} -l | grep -E '\s+${azure_id}\s+'",
+  }
 }
