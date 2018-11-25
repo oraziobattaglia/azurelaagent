@@ -41,8 +41,8 @@ class azurelaagent::install_windows (
   String $path_to_test_installation,
   String $package_name,
 
-  Optional[Boolean] $use_proxy,
-  Optional[String] $proxy,
+  Optional[Boolean] $use_proxy = false,
+  Optional[String] $proxy = undef,
 ){
 
   if ($ensure == 'present') {

@@ -15,7 +15,7 @@ class azurelaagent::config_windows (
   String $azure_shared,
 
   # Where to put the powershell script
-  Optional[String] $path_to_download = 'C:\temp'
+  Optional[String] $path_to_download,
 ) {
   file {"${path_to_download}\\ChangeWorkspaceAndKey.ps1":
     ensure => present,

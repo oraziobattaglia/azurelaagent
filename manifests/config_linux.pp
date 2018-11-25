@@ -14,7 +14,7 @@ class azurelaagent::config_linux (
   String $azure_id,
   String $azure_shared,
 
-  Optional[String] $omsadmin_command = '/opt/microsoft/omsagent/bin/omsadmin.sh',
+  Optional[String] $omsadmin_command,
 ){
   # Set new workspace Id and Key
   exec { 'SetWorkspaceAndKeyOnLinux':

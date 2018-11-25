@@ -35,8 +35,8 @@ class azurelaagent::install_linux (
   String $path_to_download,
   String $downloaded_script,
 
-  Optional[Boolean] $use_proxy,
-  Optional[String] $proxy,
+  Optional[Boolean] $use_proxy = false,
+  Optional[String] $proxy = undef,
 
   # Optional[Array] $packages_to_install = ['glibc','openssl','curl','python-ctypes','pam'],  
 ){
