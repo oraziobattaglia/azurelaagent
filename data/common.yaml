@@ -24,6 +24,9 @@
   azurelaagent::config_windows::path_to_download: 'C:\temp'
 
   # Linux config proxy data
+  azurelaagent::config_proxy_linux::ensure: 'present'
+  azurelaagent::config_proxy_linux::path_proxy_conf: '/etc/opt/microsoft/omsagent/proxy.conf'
+  azurelaagent::config_proxy_linux::service_restart_command: '/opt/microsoft/omsagent/bin/service_control restart'
 
   # Windows config proxy data
   azurelaagent::config_proxy_windows::ensure: 'present'
