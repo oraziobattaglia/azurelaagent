@@ -1,7 +1,7 @@
 # @summary Configure proxy settings after installation
 #
 # @param ensure
-#   'present' to set proxy, 'absent' to purge setting
+#   'present' to set proxy, 'absent' to purge settings
 # @param proxy_server
 #   The proxy url like http://your.proxy:port
 # @param proxy_user
