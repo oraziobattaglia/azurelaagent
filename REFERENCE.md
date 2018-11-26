@@ -8,6 +8,9 @@
 * [`azurelaagent`](#azurelaagent): Install and configure Azure Log Analytics on Windows and Linux
 * [`azurelaagent::config`](#azurelaagentconfig): Change Azure Log Analytics configuration on Windows and Linux
 * [`azurelaagent::config_linux`](#azurelaagentconfig_linux): Permit to set new workspace Id and Key. Remove all present workspace Ids.
+* [`azurelaagent::config_proxy`](#azurelaagentconfig_proxy): Configure proxy settings after installation
+* [`azurelaagent::config_proxy_linux`](#azurelaagentconfig_proxy_linux): Configure proxy settings after installation
+* [`azurelaagent::config_proxy_windows`](#azurelaagentconfig_proxy_windows): Configure proxy settings after installation
 * [`azurelaagent::config_windows`](#azurelaagentconfig_windows): Permit to set new workspace Id and Key. Remove all present workspace Ids.
 * [`azurelaagent::install_linux`](#azurelaagentinstall_linux): Install agent on linux.
 * [`azurelaagent::install_windows`](#azurelaagentinstall_windows): Install agent on windows.
@@ -47,15 +50,19 @@ Data type: `String`
 
 ##### `azure_id`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Azure workspace ID
 
+Default value: `undef`
+
 ##### `azure_shared`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Azure shared key
+
+Default value: `undef`
 
 ##### `use_proxy`
 
@@ -147,7 +154,173 @@ Data type: `Optional[String]`
 
 
 
-Default value: '/opt/microsoft/omsagent/bin/omsadmin.sh'
+### azurelaagent::config_proxy
+
+Configure proxy settings after installation
+
+#### Examples
+
+##### 
+
+```puppet
+class {'azurelaagent::config_proxy':
+  proxy_server   => 'http://your.proxy:port',
+  proxy_user     => 'username',
+  proxy_password => 'password',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `azurelaagent::config_proxy` class.
+
+##### `ensure`
+
+Data type: `String`
+
+'present' to set proxy, 'absent' to purge settings
+
+##### `proxy_server`
+
+Data type: `Optional[String]`
+
+The proxy url like http://your.proxy:port
+
+Default value: `undef`
+
+##### `proxy_user`
+
+Data type: `Optional[String]`
+
+Username for proxy that require authentication
+
+Default value: `undef`
+
+##### `proxy_password`
+
+Data type: `Optional[String]`
+
+Password for proxy that require authentication
+
+Default value: `undef`
+
+### azurelaagent::config_proxy_linux
+
+Configure proxy settings after installation
+
+#### Examples
+
+##### 
+
+```puppet
+class {'azurelaagent::config_proxy_linux':
+  proxy_server   => 'http://your.proxy:port',
+  proxy_user     => 'username',
+  proxy_password => 'password',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `azurelaagent::config_proxy_linux` class.
+
+##### `ensure`
+
+Data type: `String`
+
+'present' to set proxy, 'absent' to purge settings
+
+##### `proxy_server`
+
+Data type: `Optional[String]`
+
+The proxy url like http://your.proxy:port
+
+Default value: `undef`
+
+##### `proxy_user`
+
+Data type: `Optional[String]`
+
+Username for proxy that require authentication
+
+Default value: `undef`
+
+##### `proxy_password`
+
+Data type: `Optional[String]`
+
+Password for proxy that require authentication
+
+Default value: `undef`
+
+##### `path_proxy_conf`
+
+Data type: `Optional[String]`
+
+Where's the proxy.conf file
+
+##### `service_restart_command`
+
+Data type: `Optional[String]`
+
+Command to restart the omsagent
+
+### azurelaagent::config_proxy_windows
+
+Configure proxy settings after installation
+
+#### Examples
+
+##### 
+
+```puppet
+class {'azurelaagent::config_proxy_windows':
+  proxy_server   => 'http://your.proxy:port',
+  proxy_user     => 'username',
+  proxy_password => 'password',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `azurelaagent::config_proxy_windows` class.
+
+##### `ensure`
+
+Data type: `String`
+
+'present' to set proxy, 'absent' to purge settings
+
+##### `proxy_server`
+
+Data type: `Optional[String]`
+
+The proxy url like http://your.proxy:port
+
+Default value: `undef`
+
+##### `proxy_user`
+
+Data type: `Optional[String]`
+
+Username for proxy that require authentication
+
+Default value: `undef`
+
+##### `proxy_password`
+
+Data type: `Optional[String]`
+
+Password for proxy that require authentication
+
+Default value: `undef`
+
+##### `path_to_download`
+
+Data type: `Optional[String]`
+
+Where to put the powershell script
 
 ### azurelaagent::config_windows
 
@@ -186,8 +359,6 @@ Data type: `Optional[String]`
 
 
 
-Default value: 'C:\temp'
-
 ### azurelaagent::install_linux
 
 To override default value use yaml file and define variables like
@@ -208,15 +379,19 @@ Data type: `String`
 
 ##### `azure_id`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Azure workspace ID (passed from init.pp)
 
+Default value: `undef`
+
 ##### `azure_shared`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Azure shared key (passed from init.pp)
+
+Default value: `undef`
 
 ##### `x64_download_path`
 
@@ -248,11 +423,15 @@ Data type: `Optional[Boolean]`
 
 True to use a proxy (passed from init.pp)
 
+Default value: `false`
+
 ##### `proxy`
 
 Data type: `Optional[String]`
 
 Proxy URL like [protocol://][user:password@]proxyhost[:port] (passed from init.pp)
+
+Default value: `undef`
 
 ### azurelaagent::install_windows
 
@@ -274,15 +453,19 @@ Data type: `String`
 
 ##### `azure_id`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Azure workspace ID (passed from init.pp)
 
+Default value: `undef`
+
 ##### `azure_shared`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Azure shared key (passed from init.pp)
+
+Default value: `undef`
 
 ##### `x64_download_path`
 
@@ -326,9 +509,13 @@ Data type: `Optional[Boolean]`
 
 True to use a proxy (passed from init.pp)
 
+Default value: `false`
+
 ##### `proxy`
 
 Data type: `Optional[String]`
 
 Proxy URL like [protocol://][user:password@]proxyhost[:port] (passed from init.pp)
+
+Default value: `undef`
 

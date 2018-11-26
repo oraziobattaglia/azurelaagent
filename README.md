@@ -35,27 +35,55 @@ Example
 To install the agent
 
 ```
-   class { 'azurelaagent':
-     azure_id     => 'your_workspace_id',
-     azure_shared => 'your_shared_key',
-   }
+  class { 'azurelaagent':
+    azure_id     => 'your_workspace_id',
+    azure_shared => 'your_shared_key',
+  }
 ```
 
-To modify workspace id and key
+To modify workspace id and key after installation
 
 ```
-   class { 'azurelaagent::config':
-     azure_id     => 'your_workspace_id',
-     azure_shared => 'your_shared_key',
-   }
+  class { 'azurelaagent::config':
+    azure_id     => 'your_workspace_id',
+    azure_shared => 'your_shared_key',
+  }
+```
+
+To modify the proxy settings after installation
+
+Unauthenticated proxy
+
+```
+  class {'azurelaagent::config_proxy':
+    proxy_server   => 'http://your.proxy:port',
+  }
+```
+
+Authenticated proxy
+
+```
+  class {'azurelaagent::config_proxy':
+    proxy_server   => 'http://your.proxy:port',
+    proxy_user     => 'username',
+    proxy_password => 'password',
+  }
+```
+
+To remove the proxy settings after installation
+
+```
+  class {'azurelaagent::config_proxy':
+    ensure => 'absent',
+  }
 ```
 
 To uninstall the agent
 
 ```
-   class { 'azurelaagent':
-     ensure => 'absent',
-   }
+  class { 'azurelaagent':
+    ensure => 'absent',
+  }
 ```
 
 ## Usage
