@@ -67,7 +67,7 @@ switch ($command) {
                 #User and password are set
                 $healthServiceSettings.SetProxyInfo($proxy_server, $proxy_user, $proxy_password)
             } else {
-                $healthServiceSettings.SetProxyUrl($proxy_server)
+                $healthServiceSettings.SetProxyInfo($proxy_server,'','')
             }
             exit 0
         } else {
