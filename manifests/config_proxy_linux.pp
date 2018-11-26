@@ -1,9 +1,24 @@
-# A description of what this class does
+# @summary Configure proxy settings after installation
 #
-# @summary A short summary of the purpose of this class
+# @param ensure
+#   'present' to set proxy, 'absent' to purge setting
+# @param proxy_server
+#   The proxy url like http://your.proxy:port
+# @param proxy_user
+#   Username for proxy that require authentication
+# @param proxy_password
+#   Password for proxy that require authentication
+# @param path_proxy_conf
+#   Where's the proxy.conf file
+# @param service_restart_command
+#   Command to restart the omsagent
 #
 # @example
-#   include azurelaagent::config_proxy_linux
+#   class {'azurelaagent::config_proxy_linux':
+#     proxy_server   => 'http://your.proxy:port',
+#     proxy_user     => 'username',
+#     proxy_password => 'password',
+#   }
 class azurelaagent::config_proxy_linux (
   String $ensure,
 
