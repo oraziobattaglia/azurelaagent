@@ -22,8 +22,9 @@
 class azurelaagent (
   # Data in yaml
   String $ensure,
-  String $azure_id,
-  String $azure_shared,
+
+  Optional[String] $azure_id = undef,
+  Optional[String] $azure_shared = undef,
 
   Optional[Boolean] $use_proxy = false,
   Optional[String] $proxy = undef,

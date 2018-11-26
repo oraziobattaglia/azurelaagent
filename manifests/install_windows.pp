@@ -31,15 +31,15 @@
 class azurelaagent::install_windows (
   String $ensure,
 
-  String $azure_id,
-  String $azure_shared,
-
   String $x64_download_path,
   String $x86_download_path,
   String $path_to_download,
   String $downloaded_exe,
   String $path_to_test_installation,
   String $package_name,
+
+  Optional[String] $azure_id = undef,
+  Optional[String] $azure_shared = undef,
 
   Optional[Boolean] $use_proxy = false,
   Optional[String] $proxy = undef,

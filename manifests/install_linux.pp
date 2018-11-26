@@ -27,13 +27,13 @@
 class azurelaagent::install_linux (
   String $ensure,
 
-  String $azure_id,
-  String $azure_shared,
-
   String $x64_download_path,
   String $x86_download_path,
   String $path_to_download,
   String $downloaded_script,
+
+  Optional[String] $azure_id = undef,
+  Optional[String] $azure_shared = undef,
 
   Optional[Boolean] $use_proxy = false,
   Optional[String] $proxy = undef,
