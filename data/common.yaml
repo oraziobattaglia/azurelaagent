@@ -1,6 +1,8 @@
 # azurelaagent/data/common.yaml
 ---
   # Common data
+
+  # Init data
   azurelaagent::ensure: 'present'
 
   # Linux installation data
@@ -22,6 +24,9 @@
 
   # Windows config data
   azurelaagent::config_windows::path_to_download: 'C:\temp'
+
+  # Config proxy data
+  azurelaagent::config_proxy::ensure: 'present'
 
   # Linux config proxy data
   azurelaagent::config_proxy_linux::ensure: 'present'
