@@ -20,7 +20,7 @@
   azurelaagent::install_windows::package_name: 'Microsoft Monitoring Agent'
 
   # Linux config data
-  azurelaagent::config_linux::$omsadmin_command: '/opt/microsoft/omsagent/bin/omsadmin.sh'
+  azurelaagent::config_linux::omsadmin_command: '/opt/microsoft/omsagent/bin/omsadmin.sh'
 
   # Windows config data
   azurelaagent::config_windows::path_to_download: 'C:\temp'
