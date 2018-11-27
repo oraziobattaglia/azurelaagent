@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe 'azurelaagent::config' do
+
+  let(:params) do
+    {
+      'azure_id' => 'azure_id',
+      'azure_shared' => 'azure_shared',
+    }
+  end
+  
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
