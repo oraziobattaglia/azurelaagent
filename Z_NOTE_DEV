@@ -31,9 +31,7 @@ pdk build
 Test con rspec
 pdk test unit
 
-Installare i moduli che servono in spec\fixtures\modules con i comandi
-puppet module install puppetlabs-stdlib --target-dir .\spec\fixtures\modules\
-puppet module install puppetlabs-powershell --target-dir .\spec\fixtures\modules\
+Installare i moduli che servono in spec\fixtures\modules indicandoli in .fixtures.yml
 
 Alla fine ho sempre degli errori di path sui file come quelli riportati sotto, sia su linux che su windows e non si capisce forse un baco
 
