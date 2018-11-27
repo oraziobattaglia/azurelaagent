@@ -8,7 +8,21 @@ describe 'azurelaagent::config_proxy_linux' do
     }
   end
 
-  on_supported_os.each do |os, os_facts|
+  test_on = {
+    :hardwaremodels => ['x86_64', 'i386'],
+    :supported_os   => [
+      {
+        'operatingsystem'        => 'CentOS',
+        'operatingsystemrelease' => ['6'],
+      },
+      {
+        'operatingsystem'        => 'Ubuntu',
+        'operatingsystemrelease' => ['14.04','16.04','18.04'],
+      },      
+    ],
+  }
+
+  on_supported_os(test_on).each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
 
