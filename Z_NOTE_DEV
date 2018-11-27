@@ -27,3 +27,22 @@ puppet strings generate --format markdown
 
 Per generare il pacchetto .tar.gz per pubblicare il modulo sulla forge
 pdk build
+
+Test con rspec
+pdk test unit
+
+Installare i moduli che servono in spec\fixtures\modules con i comandi
+puppet module install puppetlabs-stdlib --target-dir .\spec\fixtures\modules\
+puppet module install puppetlabs-powershell --target-dir .\spec\fixtures\modules\
+
+Alla fine ho sempre degli errori di path sui file come quelli riportati sotto, sia su linux che su windows e non si capisce forse un baco
+
+failed: rspec: ./spec/classes/config_proxy_linux_spec.rb:15: error during compilation: Parameter path failed on File[/etc/opt/microsoft/omsagent/proxy.conf]: File paths must be ful
+ly qualified, not '/etc/opt/microsoft/omsagent/proxy.conf' (file: D:/GITHUB-Project/azurelaagent/spec/fixtures/modules/azurelaagent/manifests/config_proxy_linux.pp, line: 52)
+  azurelaagent::config_proxy_linux on windows-10-x64 should compile into a catalogue without dependency cycles
+  Failure/Error:
+        let(:facts) { os_facts }
+
+        it { is_expected.to compile }
+      end
+    end
