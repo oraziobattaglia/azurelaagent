@@ -28,6 +28,8 @@ The module have the dependecies:
 
 ### Setup Requirements
 
+* Require powershell version 3 or major to use the Invoke-WebRequest cmdlet
+
 ### Beginning with azurelaagent  
 
 Example
