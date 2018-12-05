@@ -43,12 +43,14 @@ class azurelaagent::config_proxy_windows (
           command  => "${path_to_download}\\ChangeProxy.ps1 -command set -proxy_server ${proxy_server} -proxy_user ${proxy_user} -proxy_password ${proxy_password}", # lint:ignore:140chars
           unless   => "${path_to_download}\\ChangeProxy.ps1 -command get -proxy_server ${proxy_server} -proxy_user ${proxy_user}",
           provider => powershell,
+          require  => File["${path_to_download}\\ChangeProxy.ps1"],
         }
       } else {
         exec { 'SetProxySettings':
           command  => "${path_to_download}\\ChangeProxy.ps1 -command set -proxy_server ${proxy_server}",
           unless   => "${path_to_download}\\ChangeProxy.ps1 -command get -proxy_server ${proxy_server}",
           provider => powershell,
+          require  => File["${path_to_download}\\ChangeProxy.ps1"],
         }
       }
     } else {
@@ -60,6 +62,7 @@ class azurelaagent::config_proxy_windows (
       command  => "${path_to_download}\\ChangeProxy.ps1 -command remove",
       unless   => "${path_to_download}\\ChangeProxy.ps1 -command get",
       provider => powershell,
+      require  => File["${path_to_download}\\ChangeProxy.ps1"],
     }
   } else {
     fail('The ensure param must be present or absent')

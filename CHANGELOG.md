@@ -1,5 +1,22 @@
 # Changelog
 
+## Release 0.1.4
+
+**Features**
+
+* Install and uninstall Azure Log Analytics agent on linux and windows systems
+* Modify Azure Log Analytics workspace id and key after installation
+* Modify proxy settings after installation
+
+**Bugfixes**
+
+* Added resource dependecies
+
+**Known Issues**
+
+* Sometime the proxy server is configured without the protocol (http|https), for example using 'http://myproxy.com' the agent configuration will be 'myproxy.com'. This cause problem with idempotency. Seem to be a problem with the 'AgentConfigManager.MgmtSvcCfg' object used in the ChangeProxy.ps1 script.
+* On Linux when change the proxy configuration there's no command to view the current proxy settings. The /opt/microsoft/omsagent/bin/omsadmin.sh -l command show the current workspace configuration but there isn't a switch to show the current proxy configuration.
+
 ## Release 0.1.3
 
 **Features**

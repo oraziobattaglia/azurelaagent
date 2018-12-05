@@ -86,6 +86,7 @@ class azurelaagent::install_linux (
       path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
       command => $install_command,
       unless  => 'test -f /opt/microsoft/omsagent/bin/omsadmin.sh',
+      require => Exec['OMSAgent install script download'],
     }
 
   } elsif ($ensure == 'absent') {
@@ -94,6 +95,7 @@ class azurelaagent::install_linux (
       path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
       command => "${path_to_download}/${downloaded_script} --purge",
       onlyif  => 'test -f /opt/microsoft/omsagent/bin/omsadmin.sh',
+      require => Exec['OMSAgent install script download'],
     }
 
   } else {

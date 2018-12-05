@@ -27,5 +27,6 @@ class azurelaagent::config_windows (
     command  => "${path_to_download}\\ChangeWorkspaceAndKey.ps1 -command set -workspaceId ${azure_id} -workspaceKey ${azure_shared}",
     unless   => "${path_to_download}\\ChangeWorkspaceAndKey.ps1 -command get -workspaceId ${azure_id}",
     provider => powershell,
+    require  => File["${path_to_download}\\ChangeWorkspaceAndKey.ps1"],
   }
 }

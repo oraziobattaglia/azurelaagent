@@ -66,17 +66,18 @@ class azurelaagent::install_windows (
     }
 
     # Installation exe download
-    exec { 'MMASetup.exe install exe download':
+    exec { 'MMASetup.exe_download':
       command  => $download_command,
       unless   => "if (Test-Path -Path ${path_to_download}\\${downloaded_exe}) {exit 0} else {exit 1}",
       provider => powershell,
     }
 
     # File extraction
-    exec { 'MMASetup.exe extraction':
+    exec { 'MMASetup.exe_extraction':
       command  =>  "${path_to_download}\\${downloaded_exe} /c /t:${path_to_download}\\extracted",
       unless   => "if (Test-Path -Path ${path_to_download}\\extracted\\setup.exe) {exit 0} else {exit 1}",
       provider => powershell,
+      require  => Exec['MMASetup.exe_download'],
     }
 
     if ($use_proxy and $proxy != '' and $proxy != undef) {
@@ -86,10 +87,11 @@ class azurelaagent::install_windows (
     }
 
     # Agent installation
-    exec { 'Log Analytics Agent installation':
+    exec { 'LA_Agent_installation':
       command  => $install_command,
       unless   => "if (Test-Path -Path \"${path_to_test_installation}\") {exit 0} else {exit 1}",
       provider => powershell,
+      require  => Exec['MMASetup.exe_extraction'],
     }
 
   } elsif ($ensure == 'absent') {
