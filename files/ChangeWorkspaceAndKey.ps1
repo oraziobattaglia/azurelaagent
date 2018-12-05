@@ -21,7 +21,7 @@ switch ($command) {
     $mma = New-Object -ComObject 'AgentConfigManager.MgmtSvcCfg'
     $workspaces = $mma.GetCloudWorkspaces()
 
-    if ($workspaces -ne $null) {
+    if ($null -ne $workspaces) {
         foreach ($workspace in $workspaces) {
           if ($workspace.workspaceId -eq $workspaceId) {
             $found = $true
@@ -38,7 +38,7 @@ switch ($command) {
     # Remove old workspaces
     $old_workspaces = $mma.GetCloudWorkspaces()
 
-    if ($old_workspaces -ne $null) {
+    if ($null -ne $old_workspaces) {
         foreach ($old_workspace in $old_workspaces) {
           $mma.RemoveCloudWorkspace($old_workspace.workspaceId)
         }
