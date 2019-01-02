@@ -1,0 +1,25 @@
+Gestione dei custom log (file di log in percorsi diversi dai default)
+
+Lo scopo è di aggiungere alla configurazione di Azure Log Analytics dei log che si trovano in percorsi non standard
+
+Link utili:
+https://github.com/thebitstreamer/toolbox/blob/master/AZMON-CreateCustomLog.ps1
+https://docs.microsoft.com/en-us/azure/application-insights/app-insights-powershell-script-create-resource?toc=/azure/azure-monitor/toc.json
+https://docs.microsoft.com/en-us/powershell/azure/uninstall-az-ps?view=azps-1.0.0
+
+Connessione sottoscrizione azure
+https://docs.microsoft.com/en-us/powershell/azure/authenticate-azureps?view=azps-1.0.0#sign-in-with-a-service-principal
+
+Requisiti:
+1. .Net framework 4.7.2 (la versione si trova in una chiave di registry https://docs.microsoft.com/it-it/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed)
+2. Modulo powershell Az (è nuovo, dicembre 2018, e sostituisce il modulo AzureRM), richiede powershell 5.x o 6.x
+3. Installazione del modulo Az
+  a. Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+  a. Install-Module -Name Az -AllowClobber
+4. Connect-AzAccount per connettersi alla sottoscrizione
+
+Comandi powershell utili
+
+Visualizzare i custom log
+Get-AzOperationalInsightsDataSource -Kind CustomLog -WorkspaceName workspacename -ResourceGroupName resourcegroupname
+
