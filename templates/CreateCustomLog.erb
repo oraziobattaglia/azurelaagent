@@ -17,6 +17,7 @@ param (
 
 $resourceGroup = <%= @resource_group -%>
 $workspaceName = <%= @workspace_name -%>
+$customLogName = <%= @title -%>
 
 switch ($command) {
 
@@ -71,7 +72,7 @@ $customLog = @"
     }
 "@
         # Custom Logs
-        New-AzOperationalInsightsCustomLogDataSource -ResourceGroupName $resourceGroup -WorkspaceName $workspaceName -CustomLogRawJson "$customLog" -Name "Example Custom Log Collection"  
+        New-AzOperationalInsightsCustomLogDataSource -ResourceGroupName $resourceGroup -WorkspaceName $workspaceName -CustomLogRawJson "$customLog" -Name $customLogName
 
         # Disconnect from Azure
         # Disconnect-AzAccount
