@@ -23,3 +23,14 @@ Comandi powershell utili
 Visualizzare i custom log
 Get-AzOperationalInsightsDataSource -Kind CustomLog -WorkspaceName workspacename -ResourceGroupName resourcegroupname
 
+Installazione del modulo
+Si potrebbe usare un exec del tipo
+
+    exec { 'Install Az module':
+      command  => 'Install-Module -Name Az -AllowClobber -Confirm:$false',
+      unless   => 'if (Get-InstalledModule | Select-String -Pattern "Az") { exit 0 } else { exit 1 }',
+      provider => powershell,
+    }
+
+E un hash che contiene tutti i custom log da creare
+
