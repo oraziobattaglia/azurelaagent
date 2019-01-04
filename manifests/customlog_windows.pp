@@ -57,9 +57,11 @@ class azurelaagent::customlog_windows (
     'windows': {
 
       # Install the Az module
+      # Works only with direct access to internet
+      # To use a proxy need a script and the PSCredential!
       if $manage_ps_module {
         exec { 'Install Az module':
-          command  => 'Install-Module -Name Az -AllowClobber -Confirm:$false',
+          command  => 'Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted; Install-Module -Name Az -AllowClobber', # lint:ignore:140chars
           unless   => 'if (Get-InstalledModule | Select-String -Pattern "Az") { exit 0 } else { exit 1 }',
           provider => powershell,
         }
@@ -68,7 +70,11 @@ class azurelaagent::customlog_windows (
       # For each custom log generate and run the powershell script
       $customlogs.each | $k,$v | {
           azurelaagent::customlog_res_windows { $k:
-            * => $v,
+            application_id => $application_id,
+            username       => $username,
+            password       => $password,
+            tenant_id      => $tenant_id,
+            *              => $v,
           }
       }
 

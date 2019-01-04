@@ -12,12 +12,17 @@
 # vedi https://docs.microsoft.com/it-it/azure/active-directory/develop/howto-create-service-principal-portal#required-permissions
 param (
   [String]
-  $command = "set",
+  $command
 )
 
-$resourceGroup = <%= @resource_group -%>
-$workspaceName = <%= @workspace_name -%>
-$customLogName = <%= @title -%>
+$application_id = "<%= @application_id %>"
+$username = "<%= @username %>"
+$password = ConvertTo-SecureString "<%= @password %>" -AsPlainText -Force
+$tenant_id = "<%= @tenant_id %>"
+
+$resource_group = "<%= @resource_group %>"
+$workspace_name = "<%= @workspace_name %>"
+$customLog_name = "<%= @title %>"
 
 switch ($command) {
 
@@ -31,9 +36,8 @@ switch ($command) {
         # more info here https://docs.microsoft.com/en-us/azure/azure-monitor/platform/powershell-workspace-configuration
 
         # Connect to Azure
-        # $secpasswd = ConvertTo-SecureString "PlainTextPassword" -AsPlainText -Force
-        # $mycreds = New-Object System.Management.Automation.PSCredential ("username", $secpasswd)
-        # Connect-AzAccount -ServicePrincipal -ApplicationId  "http://my-app" -Credential $mycreds -TenantId $tenantid
+        $mycreds = New-Object System.Management.Automation.PSCredential ($username, $password)
+        Connect-AzAccount -ServicePrincipal -ApplicationId  $application_id -Credential $mycreds -TenantId $tenant_id
 
 $customLog = @"
 {
@@ -43,8 +47,8 @@ $customLog = @"
         { 
             "location": { 
             "fileSystemLocations": { 
-                "windowsFileTypeLogPaths": [ <% if @windows_log_paths != [] -%> "<%= @windows_log_paths.join(", ") %>" <% end -%> ],  
-                "linuxFileTypeLogPaths": [ <% if @linux_log_paths != [] -%> "<%= @linux_log_paths.join(", ") %>" <% end -%> ] 
+                "windowsFileTypeLogPaths": [<% if @windows_log_paths != [] -%> "<%= @windows_log_paths.join('", "') %>" <% end -%>],  
+                "linuxFileTypeLogPaths": [<% if @linux_log_paths != [] -%> "<%= @linux_log_paths.join('", "') %>" <% end -%>] 
                 } 
             }, 
         "recordDelimiter": { 
@@ -72,10 +76,10 @@ $customLog = @"
     }
 "@
         # Custom Logs
-        New-AzOperationalInsightsCustomLogDataSource -ResourceGroupName $resourceGroup -WorkspaceName $workspaceName -CustomLogRawJson "$customLog" -Name $customLogName
+        New-AzOperationalInsightsCustomLogDataSource -ResourceGroupName $resource_group -WorkspaceName $workspace_name -CustomLogRawJson "$customLog" -Name $customLog_name
 
         # Disconnect from Azure
-        # Disconnect-AzAccount
+        Disconnect-AzAccount
         
   } # end set
 

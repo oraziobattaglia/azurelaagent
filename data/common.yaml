@@ -36,3 +36,28 @@
   # Windows config proxy data
   azurelaagent::config_proxy_windows::ensure: 'present'
   azurelaagent::config_proxy_windows::path_to_download: 'C:\temp'
+
+  ############################## DEV ##############################
+  azurelaagent::customlog_windows::application_id: 'app1'
+  azurelaagent::customlog_windows::username: 'username_pippo'
+  azurelaagent::customlog_windows::password: 'password_pippo'
+  azurelaagent::customlog_windows::tenant_id: '123456'   
+  azurelaagent::customlog_windows::customlogs:
+    'customlog1':
+      resource_group: 'rs1'
+      workspace_name: 'ws_name1'
+      windows_log_paths:
+        - 'e:\\iis5\\*.log'
+        - 'e:\\logs\\*.log'
+      linux_log_paths:
+        - '/var/logs'
+        - '/logs/*.log'
+    'customlog2':
+      resource_group: 'rs2'
+      workspace_name: 'ws_name2'
+      windows_log_paths:
+        - 'e:\\iis6\\*.log'
+      linux_log_paths:
+        - '/var/logs/ciccio.log'
+        - '/logs/*.log'
+  ############################################################
