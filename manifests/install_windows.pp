@@ -89,7 +89,8 @@ class azurelaagent::install_windows (
     # Agent installation
     exec { 'LA_Agent_installation':
       command  => $install_command,
-      unless   => "if (Test-Path -Path \"${path_to_test_installation}\") {exit 0} else {exit 1}",
+      #unless   => "if (Test-Path -Path \"${path_to_test_installation}\") {exit 0} else {exit 1}",
+      unless   => "if  (Get-WMIObject  -Query 'SELECT * FROM Win32_Product Where Name Like "Microsoft Monitoring Agent"'') { $true } else { $false }",      
       provider => powershell,
       require  => Exec['MMASetup.exe_extraction'],
     }
