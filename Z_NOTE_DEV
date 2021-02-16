@@ -22,13 +22,13 @@ Notify per test
   #   message => $download_command,
   # }
 
+pdk validate
+
+Test con rspec (Installare i moduli che servono in spec\fixtures\modules indicandoli in .fixtures.yml)
+pdk test unit
+
 Generare la documentazione markdown nel file REFERENCE.md 
 puppet strings generate --format markdown
 
 Per generare il pacchetto .tar.gz per pubblicare il modulo sulla forge
 pdk build
-
-Test con rspec
-pdk test unit
-
-Installare i moduli che servono in spec\fixtures\modules indicandoli in .fixtures.yml

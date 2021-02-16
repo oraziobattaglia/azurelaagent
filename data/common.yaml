@@ -6,8 +6,8 @@
   azurelaagent::ensure: 'present'
 
   # Linux installation data
-  azurelaagent::install_linux::x64_download_path: 'https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.8.1.256/omsagent-1.8.1-256.universal.x64.sh'
-  azurelaagent::install_linux::x86_download_path: 'https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.8.1.256/omsagent-1.8.1-256.universal.x86.sh'
+  azurelaagent::install_linux::x64_download_path: 'https://github.com/microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.12.15-0/omsagent-1.12.15-0.universal.x64.sh'
+  azurelaagent::install_linux::x86_download_path: 'https://github.com/microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.12.15-0/omsagent-1.12.15-0.universal.x86.sh'
   azurelaagent::install_linux::path_to_download: '/root'
   azurelaagent::install_linux::downloaded_script: 'omsagent.sh'
 

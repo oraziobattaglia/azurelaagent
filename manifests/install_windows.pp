@@ -47,7 +47,11 @@ class azurelaagent::install_windows (
 
   if ($ensure == 'present') {
     # Install Agent
-    ensure_resource('file', $path_to_download, {'ensure' => 'directory'})
+    if !defined(File[$path_to_download]) {
+      file {$path_to_download:
+        ensure => directory,
+      }
+    }
 
     if ($::architecture == 'amd64' or $::architecture == 'x86_64' or $::architecture == 'x64') {
       # 64 bit
